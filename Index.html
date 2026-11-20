@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="J4s_qnle22nFd2Ls11r0gJGhmsvpJCltVFiQ3LriJb4">
+<meta name="theme-color" content="#080b14">
+<meta name="description" content="SADIK PLAY - Play games and discover something new.">
+<title>SADIK PLAY | Gaming Platform</title>
+
+<style>
+:root {
+  --bg:#080b14;
+  --panel:#111827;
+  --panel-2:#0c1120;
+  --border:#263149;
+  --text:#fff;
+  --muted:#a5abc0;
+  --accent:#7185ff;
+  --accent-light:#aab6ff;
+  --danger:#b93650;
+}
+
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html {scroll-behavior:smooth}
+
+body {
+  min-width:320px;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.5;
+}
+
+button,input,textarea {font:inherit}
+button,a {-webkit-tap-highlight-color:transparent}
+
+header {
+  position:sticky;
+  top:0;
+  z-index:20;
+  min-height:72px;
+  padding:14px 7%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  background:rgba(12,17,32,.96);
+  border-bottom:1px solid #202638;
+  backdrop-filter:blur(12px);
+}
+
+.logo {
+  font-size:23px;
+  font-weight:900;
+  letter-spacing:1px;
+  white-space:nowrap;
+}
+
+.logo span,.footer-brand span {color:var(--accent)}
+
+nav {
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+nav a {
+  color:#c7cbe0;
+  text-decoration:none;
+  font-size:14px;
+}
+
+nav a:hover {color:var(--accent-light)}
+
+.hero {
+  padding:92px 7% 82px;
+  text-align:center;
+  background:radial-gradient(ellipse at top,#202b58 0%,var(--bg) 70%);
+}
+
+.tag {
+  display:inline-block;
+  margin-bottom:24px;
+  padding:8px 16px;
+  border:1px solid #424e8c;
+  border-radius:30px;
+  color:var(--accent-light);
+  font-size:11px;
+  letter-spacing:1.4px;
+}
+
+.hero h1 {
+  font-size:clamp(38px,8vw,68px);
+  line-height:1.12;
+  letter-spacing:2px;
+}
+
+.hero h1 span {color:var(--accent)}
+
+.hero p {
+  max-width:520px;
+  margin:20px auto 28px;
+  color:var(--muted);
+  font-size:15px;
+}
+
+.btn {
+  display:inline-flex;
+  min-height:44px;
+  align-items:center;
+  justify-content:center;
+  padding:11px 21px;
+  border:0;
+  border-radius:8px;
+  background:var(--accent);
+  color:white;
+  font-weight:700;
+  text-align:center;
+  text-decoration:none;
+  cursor:pointer;
+  transition:background .2s,transform .2s;
+}
+
+.btn:hover {
+  background:#566cf0;
+  transform:translateY(-1px);
+}
+
+.btn:disabled {
+  opacity:.6;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.btn-dark {background:#263149}
+.btn-dark:hover {background:#34415e}
+.btn-danger {background:var(--danger)}
+.btn-danger:hover {background:#962b41}
+
+section {
+  padding:64px 7%;
+  scroll-margin-top:82px;
+}
+
+.section-title {
+  margin-bottom:10px;
+  font-size:27px;
+}
+
+.section-subtitle {
+  margin-bottom:28px;
+  color:#929bb5;
+  font-size:14px;
+}
+
+.games-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:22px;
+}
+
+.game-card {
+  min-width:0;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:var(--panel);
+  transition:transform .22s,border-color .22s;
+}
+
+.game-card:hover {
+  transform:translateY(-4px);
+  border-color:var(--accent);
+}
+
+.game-image {
+  height:155px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:linear-gradient(135deg,#1c2850,#101827);
+  font-size:54px;
+}
+
+.game-image img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.game-info {padding:18px}
+
+.game-info h3 {
+  margin-bottom:8px;
+  overflow-wrap:anywhere;
+}
+
+.game-info p {
+  min-height:42px;
+  margin-bottom:14px;
+  color:#9da7bd;
+  font-size:13px;
+  overflow-wrap:anywhere;
+  white-space:pre-wrap;
+}
+
+.game-info .play-link {width:100%}
+
+.game-actions {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:9px;
+}
+
+.game-actions .btn {
+  width:100%;
+  padding:9px 8px;
+  font-size:12px;
+}
+
+.empty-message {
+  grid-column:1/-1;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* Snake Game */
+
+#snake {
+  background:var(--panel-2);
+  border-top:1px solid #202638;
+  border-bottom:1px solid #202638;
+  text-align:center;
+  scroll-margin-top:100px;
+}
+
+.snake-scores {
+  display:flex;
+  justify-content:center;
+  gap:24px;
+  margin:20px 0 12px;
+}
+
+.score {
+  color:var(--accent-light);
+  font-size:18px;
+  font-weight:700;
+}
+
+#gameCanvas {
+  display:block;
+  width:min(100%,400px);
+  height:auto;
+  aspect-ratio:1/1;
+  margin:18px auto;
+  border:2px solid #34436b;
+  border-radius:8px;
+  background:#050a13;
+  touch-action:none;
+}
+
+#snakeMessage {
+  min-height:24px;
+  margin:12px 0;
+  color:var(--accent-light);
+  font-size:14px;
+}
+
+.game-controls {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  margin:22px auto 10px;
+}
+
+.control-row {
+  display:flex;
+  gap:8px;
+}
+
+.control-btn {
+  width:58px;
+  height:48px;
+  border:1px solid #34415e;
+  border-radius:8px;
+  background:#26365c;
+  color:white;
+  font-size:21px;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+
+.control-btn:active {background:var(--accent)}
+
+.control-help {
+  color:#929bb5;
+  font-size:12px;
+}
+
+.snake-main-actions {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:12px auto 0;
+}
+
+.snake-main-actions .btn {min-width:132px}
+
+/* Creator */
+
+#creator {text-align:center}
+
+.creator-card {
+  max-width:520px;
+  margin:28px auto 0;
+  padding:34px 24px;
+  border:1px solid #34415e;
+  border-radius:16px;
+  background:var(--panel);
+}
+
+.creator-avatar {
+  width:94px;
+  height:94px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 19px;
+  border:2px solid #6f82ed;
+  border-radius:50%;
+  background:linear-gradient(135deg,#344b9e,#7185ff);
+  font-size:32px;
+  font-weight:900;
+}
+
+.creator-card h3 {
+  font-size:22px;
+  letter-spacing:.6px;
+  overflow-wrap:anywhere;
+}
+
+.creator-role {
+  margin:9px 0 13px;
+  color:var(--accent-light);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:1px;
+}
+
+.creator-bio {
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.8;
+}
+
+/* Admin */
+
+#admin {
+  max-width:700px;
+  margin:0 auto 64px;
+  padding:26px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--panel-2);
+  scroll-margin-top:90px;
+}
+
+#adminDashboard {display:none}
+
+.admin-form {margin-top:20px}
+
+.admin-form label {
+  display:block;
+  margin-top:10px;
+  color:#c7cbe0;
+  font-size:13px;
+}
+
+.admin-form input,
+.admin-form textarea {
+  display:block;
+  width:100%;
+  margin:7px 0 12px;
+  padding:13px;
+  border:1px solid #34415e;
+  border-radius:7px;
+  outline:none;
+  background:#080b14;
+  color:white;
+}
+
+.admin-form input:focus,
+.admin-form textarea:focus {
+  border-color:var(--accent);
+}
+
+.admin-form textarea {
+  min-height:82px;
+  resize:vertical;
+}
+
+.admin-message {
+  min-height:20px;
+  margin:12px 0;
+  color:var(--accent-light);
+  font-size:13px;
+  overflow-wrap:anywhere;
+}
+
+.admin-divider {
+  margin:22px 0;
+  border:0;
+  border-top:1px solid var(--border);
+}
+
+.admin-stat {
+  margin:16px 0;
+  padding:16px;
+  border:1px solid #34415e;
+  border-radius:10px;
+  background:#17213a;
+  color:#c7cbe0;
+}
+
+.admin-stat strong {
+  display:block;
+  margin-top:5px;
+  color:var(--accent-light);
+  font-size:27px;
+}
+
+/* Footer */
+
+footer {
+  padding:34px 7%;
+  border-top:1px solid #202638;
+  background:var(--panel-2);
+  color:#929bb5;
+  text-align:center;
+  font-size:13px;
+  line-height:2;
+}
+
+.footer-brand {
+  color:white;
+  font-size:22px;
+  font-weight:900;
+}
+
+/* Mobile layout */
+
+@media(max-width:620px) {
+  header {
+    padding:13px 5%;
+    flex-wrap:wrap;
+    gap:12px;
+    position:relative;
+  }
+
+  nav {
+    width:100%;
+    justify-content:space-between;
+    gap:8px;
+  }
+
+  nav a {font-size:12px}
+
+  .hero {padding:72px 5% 65px}
+
+  section {padding:50px 5%}
+
+  #admin {
+    margin-right:5%;
+    margin-left:5%;
+    padding:19px;
+  }
+
+  #snake {
+    padding:12px 4% 14px;
+    scroll-margin-top:8px;
+  }
+
+  #snake .section-title {
+    margin-bottom:3px;
+    font-size:22px;
+  }
+
+  #snake .section-subtitle {
+    max-width:450px;
+    margin:0 auto 6px;
+    font-size:12px;
+    line-height:1.35;
+  }
+
+  .snake-scores {
+    gap:22px;
+    margin:4px 0;
+  }
+
+  .score {font-size:15px}
+
+  #gameCanvas {
+    width:min(66vw,240px);
+    max-width:100%;
+    margin:6px auto;
+    border-width:1px;
+  }
+
+  #snakeMessage {
+    min-height:18px;
+    margin:4px 0;
+    font-size:12px;
+    line-height:1.3;
+  }
+
+  .game-controls {
+    gap:4px;
+    margin:4px auto 0;
+  }
+
+  .control-row {gap:6px}
+
+  .control-btn {
+    width:42px;
+    height:34px;
+    border-radius:7px;
+    font-size:17px;
+  }
+
+  .control-help {
+    margin-top:5px;
+    font-size:10px;
+    line-height:1.2;
+  }
+
+  .snake-main-actions {
+    gap:8px;
+    margin:8px auto 0;
+  }
+
+  .snake-main-actions .btn {
+    min-width:118px;
+    min-height:36px;
+    padding:7px 14px;
+    font-size:13px;
+  }
+}
+
+@media(max-width:620px) and (max-height:620px) {
+  #snake {
+    padding-top:8px;
+    padding-bottom:8px;
+  }
+
+  #gameCanvas {
+    width:min(54vw,190px);
+    margin:4px auto;
+  }
+
+  .control-btn {
+    width:36px;
+    height:30px;
+  }
+
+  .snake-main-actions {margin-top:5px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">SADIK <span>PLAY</span></div>
+
+  <nav aria-label="Main navigation">
+    <a href="#home">Home</a>
+    <a href="#games">Games</a>
+    <a href="#snake">Play</a>
+    <a href="#creator">Creator</a>
+    <a href="#admin">Admin</a>
+  </nav>
+</header>
+
+<main>
+
+  <div class="hero" id="home">
+    <div class="tag">WELCOME TO SADIK PLAY</div>
+    <h1>PLAY. <span>ENJOY.</span><br>REPEAT.</h1>
+    <p>Discover exciting games and enjoy your gaming experience with SADIK PLAY.</p>
+    <a href="#games" class="btn">Explore Games</a>
+  </div>
+
+  <section id="games">
+    <h2 class="section-title">Featured Games</h2>
+    <p class="section-subtitle">Discover and play your favourite games.</p>
+
+    <div class="games-grid">
+      <article class="game-card">
+        <div class="game-image" aria-hidden="true">🐍</div>
+        <div class="game-info">
+          <h3>SADIK SNAKE</h3>
+          <p>Play the classic snake game and beat your high score.</p>
+          <a href="#snake" class="btn play-link">Play Now</a>
+        </div>
+      </article>
+    </div>
+
+    <h2 class="section-title" style="margin-top:42px">Explore More Games</h2>
+    <p class="section-subtitle">More games added by SADIK PLAY will appear here.</p>
+
+    <div class="games-grid" id="gamesContainer" aria-live="polite">
+      <p class="empty-message">Connecting to the games database...</p>
+    </div>
+  </section>
+
+  <section id="snake">
+    <h2 class="section-title">SADIK SNAKE</h2>
+    <p class="section-subtitle">
+      Collect the food, grow your snake and avoid the walls and your own tail.
+    </p>
+
+    <div class="snake-scores">
+      <div class="score">Score: <span id="score">0</span></div>
+      <div class="score">Best: <span id="highScore">0</span></div>
+    </div>
+
+    <canvas
+      id="gameCanvas"
+      width="400"
+      height="400"
+      aria-label="Snake game board">
+    </canvas>
+
+    <p id="snakeMessage" aria-live="polite">
+      Press Start Game to play.
+    </p>
+
+    <div class="game-controls" aria-label="Snake direction controls">
+
+      <button type="button" class="control-btn"
+        data-dir="up" aria-label="Move up">▲</button>
+
+      <div class="control-row">
+        <button type="button" class="control-btn"
+          data-dir="left" aria-label="Move left">◀</button>
+
+        <button type="button" class="control-btn"
+          data-dir="down" aria-label="Move down">▼</button>
+
+        <button type="button" class="control-btn"
+          data-dir="right" aria-label="Move right">▶</button>
+      </div>
+    </div>
+
+    <p class="control-help">
+      Use keyboard arrows, the buttons, or swipe on the game board.
+    </p>
+
+    <div class="snake-main-actions">
+      <button type="button" class="btn" id="startSnake">Start Game</button>
+      <button type="button" class="btn btn-dark" id="restartSnake">Restart</button>
+    </div>
+  </section>
+
+  <section id="creator">
+    <h2 class="section-title">MEET THE CREATOR</h2>
+    <p class="section-subtitle">The person behind SADIK PLAY.</p>
+
+    <div class="creator-card">
+      <div class="creator-avatar" aria-hidden="true">IS</div>
+      <h3>MD. IBTESHAM SADIK</h3>
+      <p class="creator-role">FOUNDER &amp; DEVELOPER</p>
+      <p class="creator-bio">
+        I am the creator of SADIK PLAY. Passionate about technology,
+        gaming, creativity and building something unique.
+        My goal is to create an enjoyable gaming platform.
+      </p>
+    </div>
+  </section>
+
+  <section id="admin">
+    <h2 class="section-title">Admin Panel</h2>
+    <p class="section-subtitle">SADIK PLAY Owner Dashboard</p>
+
+    <div id="adminLogin">
+      <form class="admin-form" id="loginForm">
+
+        <label for="adminEmail">Email Address</label>
+        <input
+          type="email"
+          id="adminEmail"
+          placeholder="Admin email"
+          autocomplete="username"
+          required>
+
+        <label for="adminPassword">Password</label>
+        <input
+          type="password"
+          id="adminPassword"
+          placeholder="Admin password"
+          autocomplete="current-password"
+          required>
+
+        <button type="submit" class="btn" id="loginBtn">
+          Admin Login
+        </button>
+      </form>
+
+      <p class="admin-message" id="loginMessage" aria-live="polite"></p>
+    </div>
+
+    <div id="adminDashboard">
+      <h3>Welcome, Owner!</h3>
+      <p class="admin-message">
+        You are signed in to the SADIK PLAY admin dashboard.
+      </p>
+
+      <div class="admin-stat">
+        Total Games
+        <strong id="totalGames">0</strong>
+      </div>
+
+      <hr class="admin-divider">
+
+      <h3>Add New Game</h3>
+
+      <form class="admin-form" id="addGameForm">
+
+        <label for="gameTitle">Game Name</label>
+        <input
+          type="text"
+          id="gameTitle"
+          placeholder="Enter game name"
+          maxlength="80"
+          required>
+
+        <label for="gameDescription">Description</label>
+        <textarea
+          id="gameDescription"
+          placeholder="Enter game description"
+          maxlength="500"
+          required></textarea>
+
+        <label for="gameImage">Game Image URL (optional)</label>
+        <input
+          type="url"
+          id="gameImage"
+          placeholder="https://example.com/image.jpg">
+
+        <label for="gameLink">Game Link</label>
+        <input
+          type="url"
+          id="gameLink"
+          placeholder="https://example.com/game"
+          required>
+
+        <button type="submit" class="btn" id="addGameBtn">
+          Add New Game
+        </button>
+      </form>
+
+      <p class="admin-message" id="adminMessage" aria-live="polite"></p>
+
+      <hr class="admin-divider">
+
+      <button type="button" class="btn btn-danger" id="logoutBtn">
+        Logout
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-brand">SADIK <span>PLAY</span></div>
+  <p>Gaming Beyond Limits.</p>
+  <p>Created by <strong>MD. Ibtesham Sadik</strong></p>
+  <p>&copy; 2026 SADIK PLAY. All Rights Reserved.</p>
+</footer>
+
+<!-- Firebase and Admin Panel -->
+<script type="module">
+
+import { auth, db } from "./firebase.js";
+
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  deleteDoc,
+  updateDoc,
+  doc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+
+const ADMIN_UID = "3O0LE55QdvfdkMwv2IWpiaQb2NI2";
+
+const loginBox = document.getElementById("adminLogin");
+const dashboard = document.getElementById("adminDashboard");
+const loginForm = document.getElementById("loginForm");
+const loginMessage = document.getElementById("loginMessage");
+const adminMessage = document.getElementById("adminMessage");
+const gamesContainer = document.getElementById("gamesContainer");
+const totalGames = document.getElementById("totalGames");
+const loginBtn = document.getElementById("loginBtn");
+const addGameBtn = document.getElementById("addGameBtn");
+
+let isAdmin = false;
+let currentGames = [];
+
+
+function validHttpUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+
+function makeTextElement(tag,className,text) {
+  const element = document.createElement(tag);
+
+  if (className) {
+    element.className = className;
+  }
+
+  element.textContent = text;
+  return element;
+}
+
+
+function renderGames() {
+
+  gamesContainer.replaceChildren();
+
+  totalGames.textContent = String(currentGames.length);
+
+  if (currentGames.length === 0) {
+    gamesContainer.appendChild(
+      makeTextElement(
+        "p",
+        "empty-message",
+        "No games have been added yet."
+      )
+    );
+    return;
+  }
+
+  currentGames.forEach(({id,data}) => {
+
+    const card = document.createElement("article");
+    card.className = "game-card";
+
+    const imageBox = document.createElement("div");
+    imageBox.className = "game-image";
+
+    if (data.image && validHttpUrl(data.image)) {
+
+      const img = document.createElement("img");
+
+      img.src = data.image;
+      img.alt = data.title || "Game image";
+      img.loading = "lazy";
+
+      img.onerror = () => {
+        imageBox.replaceChildren();
+        imageBox.textContent = "🎮";
+      };
+
+      imageBox.appendChild(img);
+
+    } else {
+      imageBox.textContent = "🎮";
+    }
+
+    const info = document.createElement("div");
+    info.className = "game-info";
+
+    info.appendChild(
+      makeTextElement("h3","",data.title || "Untitled Game")
+    );
+
+    info.appendChild(
+      makeTextElement("p","",data.description || "")
+    );
+
+    const playLink = document.createElement("a");
+
+    playLink.className = "btn play-link";
+    playLink.textContent = "Play Now";
+
+    if (data.link && validHttpUrl(data.link)) {
+
+      playLink.href = data.link;
+      playLink.target = "_blank";
+      playLink.rel = "noopener noreferrer";
+
+    } else {
+
+      playLink.href = "#games";
+
+      playLink.addEventListener("click",event => {
+        event.preventDefault();
+      });
+
+      playLink.textContent = "Game Link Unavailable";
+    }
+
+    info.appendChild(playLink);
+
+    if (isAdmin) {
+
+      const actions = document.createElement("div");
+      actions.className = "game-actions";
+
+      const editButton = makeTextElement(
+        "button",
+        "btn btn-dark",
+        "Edit"
+      );
+
+      editButton.type = "button";
+
+      editButton.addEventListener("click",async () => {
+
+        const newTitle = prompt(
+          "Game name:",
+          data.title || ""
+        );
+
+        if (newTitle === null) return;
+
+        const newDescription = prompt(
+          "Game description:",
+          data.description || ""
+        );
+
+        if (newDescription === null) return;
+
+        const newImage = prompt(
+          "Image URL (leave blank for no image):",
+          data.image || ""
+        );
+
+        if (newImage === null) return;
+
+        const newLink = prompt(
+          "Game link:",
+          data.link || ""
+        );
+
+        if (newLink === null) return;
+
+        const cleanTitle = newTitle.trim();
+        const cleanDescription = newDescription.trim();
+        const cleanImage = newImage.trim();
+        const cleanLink = newLink.trim();
+
+        if (
+          !cleanTitle ||
+          !cleanDescription ||
+          !validHttpUrl(cleanLink)
+        ) {
+          alert(
+            "Please enter a game name, description and valid HTTP/HTTPS game link."
+          );
+          return;
+        }
+
+        if (cleanImage && !validHttpUrl(cleanImage)) {
+          alert(
+            "Please enter a valid HTTP/HTTPS image URL, or leave it blank."
+          );
+          return;
+        }
+
+        try {
+
+          await updateDoc(doc(db,"games",id),{
+            title:cleanTitle,
+          
