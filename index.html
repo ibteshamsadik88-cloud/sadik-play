@@ -6,6 +6,8 @@
   <meta name="google-site-verification" content="J4s_qnle22nFd2Ls11r0gJGhmsvpJCltVFiQ3LriJb4">
   <meta name="description" content="SADIK PLAY — browser games and creator hub.">
   <meta name="theme-color" content="#0b111b">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="sadik-play-icon-192.png" type="image/png">
   <title>SADIK PLAY | Gaming Zone</title>
   <style>
     :root {
@@ -60,10 +62,12 @@
     .site-header {
       position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
       gap: 13px; padding: 13px max(18px, calc((100% - 1120px) / 2));
-      background: rgba(10, 16, 26, .94); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px);
+      background: rgba(10, 16, 26, .96); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px);
     }
+    .header-brand-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; }
     .brand { color: var(--text); font-size: 1.08rem; font-weight: 900; letter-spacing: .14em; white-space: nowrap; }
     .nav-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+    .install-btn { flex: 0 0 auto; white-space: nowrap; border-color: rgba(112,216,208,.45); color: var(--accent); }
     .nav-btn { padding: 9px 12px; font-size: .84rem; white-space: nowrap; }
     .nav-btn.active { color: var(--accent); border-color: rgba(112,216,208,.62); background: rgba(112,216,208,.08); }
     .page-wrap { width: min(1060px, calc(100% - 36px)); min-height: calc(100vh - 120px); margin: 0 auto; }
@@ -152,10 +156,13 @@
     @keyframes enter { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
 
     @media (max-width: 720px) {
-      .site-header { flex-direction: column; gap: 9px; padding: 11px 12px 9px; }
+      .site-header { flex-direction: column; align-items: stretch; gap: 9px; padding: 10px 12px 9px; }
+      .header-brand-row { width: 100%; }
       .brand { font-size: 1rem; }
       .nav-links { width: 100%; display: flex; flex-wrap: nowrap; justify-content: space-between; gap: 5px; }
-      .nav-btn { flex: 1 1 auto; min-width: 0; padding: 8px 5px; font-size: clamp(.64rem, 2.7vw, .77rem); }
+      .nav-btn { flex: 1 1 auto; min-width: 0; padding: 8px 4px; font-size: clamp(.60rem, 2.35vw, .73rem); }
+      .nav-links .nav-btn { flex: 1 1 0; }
+      .install-btn { flex: 0 0 auto; padding: 8px 11px; font-size: .78rem; }
       .page-wrap { width: calc(100% - 26px); min-height: calc(100vh - 108px); }
       .page { padding: 22px 0 30px; }
       #menuPage { padding-top: 18px; }
@@ -199,7 +206,10 @@
 
   <div id="app" class="hidden">
     <header class="site-header">
-      <div class="brand">SADIK PLAY</div>
+      <div class="header-brand-row">
+        <div class="brand">SADIK PLAY</div>
+        <button class="primary-btn install-btn" type="button" id="installAppBtn" aria-label="Install SADIK PLAY app">⬇ Install App</button>
+      </div>
       <nav class="nav-links" aria-label="Main navigation">
         <button class="nav-btn active" type="button" data-page="menuPage">Main Menu</button>
         <button class="nav-btn" type="button" data-page="gamesPage">Games Corner</button>
@@ -376,6 +386,44 @@
       navButtons.forEach(button => button.addEventListener("click", () => showPage(button.dataset.page)));
       document.querySelectorAll("[data-go]").forEach(button => button.addEventListener("click", () => showPage(button.dataset.go)));
       document.getElementById("currentYear").textContent = String(new Date().getFullYear());
+
+      // PWA install support. The browser controls when the native install prompt is available.
+      let deferredInstallPrompt = null;
+      const installButton = document.getElementById("installAppBtn");
+      window.addEventListener("beforeinstallprompt", event => {
+        event.preventDefault();
+        deferredInstallPrompt = event;
+        installButton.textContent = "⬇ Install App";
+      });
+      window.addEventListener("appinstalled", () => {
+        deferredInstallPrompt = null;
+        installButton.textContent = "✓ App Installed";
+        installButton.disabled = true;
+      });
+      installButton.addEventListener("click", async () => {
+        if (deferredInstallPrompt) {
+          deferredInstallPrompt.prompt();
+          await deferredInstallPrompt.userChoice;
+          deferredInstallPrompt = null;
+          return;
+        }
+        const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+        const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+        if (isStandalone) {
+          installButton.textContent = "✓ App Installed";
+          installButton.disabled = true;
+        } else if (isIOS) {
+          alert("To install SADIK PLAY: tap Share, then choose 'Add to Home Screen'.");
+        } else {
+          alert("To install SADIK PLAY: open your browser menu (⋮) and choose 'Install app' or 'Add to Home screen'. If the option is missing, first open the live HTTPS website and try again.");
+        }
+      });
+      if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./service-worker.js").catch(error => console.warn("Service worker registration failed:", error));
+        });
+      }
+
 
       // Snake Game
       const canvas = document.getElementById("gameCanvas");
