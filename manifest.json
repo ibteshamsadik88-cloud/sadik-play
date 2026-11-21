@@ -1,0 +1,25 @@
+
+{
+  "id": "./",
+  "name": "SADIK PLAY",
+  "short_name": "SADIK PLAY",
+  "description": "SADIK PLAY Gaming Platform",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#080D19",
+  "theme_color": "#080D19",
+  "icons": [
+    {
+      "src": "./sadik-play-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./sadik-play-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
