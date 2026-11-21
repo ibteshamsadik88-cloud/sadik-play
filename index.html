@@ -1,269 +1,912 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <meta name="google-site-verification" content="J4s_qnle22nFd2Ls11r0gJGhmsvpJCltVFiQ3LriJb4">
+
   <meta name="theme-color" content="#080b14">
-  <meta name="description" content="SADIK PLAY - Play games and discover something new.">
+  <meta name="description" content="SADIK PLAY - Explore games and enjoy your gaming experience.">
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./sadik-play-icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="./sadik-play-icon-192.png">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="SADIK PLAY">
+
   <title>SADIK PLAY | Gaming Platform</title>
 
   <style>
     :root {
-      --bg: #080b14;
-      --panel: #111827;
-      --panel-2: #0c1120;
-      --border: #263149;
+      --bg: #070b16;
+      --panel: #10182b;
+      --panel2: #141f38;
       --text: #ffffff;
-      --muted: #a5abc0;
-      --accent: #7185ff;
-      --accent-light: #aab6ff;
-      --danger: #b93650;
+      --muted: #a6b2ca;
+      --cyan: #16dcff;
+      --purple: #9b5cff;
+      --border: rgba(107, 155, 255, .22);
+      --danger: #e63b61;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
     body {
       min-width: 320px;
-      background: var(--bg);
+      min-height: 100vh;
       color: var(--text);
+      background:
+        radial-gradient(ellipse at 10% 10%, rgba(27, 86, 190, .16), transparent 38%),
+        radial-gradient(ellipse at 90% 30%, rgba(130, 40, 220, .13), transparent 38%),
+        var(--bg);
       font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.5;
+      line-height: 1.6;
     }
-    button, input, textarea { font: inherit; }
-    button, a { -webkit-tap-highlight-color: transparent; }
+
+    button, input, textarea {
+      font: inherit;
+    }
+
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      cursor: pointer;
+    }
 
     header {
       position: sticky;
       top: 0;
-      z-index: 20;
-      min-height: 72px;
-      padding: 14px 7%;
+      z-index: 50;
+      min-height: 70px;
+      padding: 12px 6%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      background: rgba(12, 17, 32, .96);
-      border-bottom: 1px solid #202638;
-      backdrop-filter: blur(12px);
+      gap: 14px;
+      background: rgba(7, 11, 22, .94);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(15px);
     }
-    .logo { font-size: 23px; font-weight: 900; letter-spacing: 1px; white-space: nowrap; }
-    .logo span, .footer-brand span { color: var(--accent); }
-    nav { display: flex; align-items: center; gap: 20px; }
-    nav a { color: #c7cbe0; text-decoration: none; font-size: 14px; }
-    nav a:hover { color: var(--accent-light); }
 
-    .hero {
-      padding: 92px 7% 82px;
-      text-align: center;
-      background: radial-gradient(ellipse at top, #202b58 0%, var(--bg) 70%);
+    .logo {
+      color: white;
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      white-space: nowrap;
     }
-    .tag {
-      display: inline-block;
-      margin-bottom: 24px;
-      padding: 8px 16px;
-      border: 1px solid #424e8c;
-      border-radius: 30px;
-      color: var(--accent-light);
-      font-size: 11px;
-      letter-spacing: 1.4px;
+
+    .logo span,
+    .footer-brand span {
+      color: var(--cyan);
+      text-shadow: 0 0 12px rgba(22, 220, 255, .65);
     }
-    .hero h1 { font-size: clamp(38px, 8vw, 68px); line-height: 1.12; letter-spacing: 2px; }
-    .hero h1 span { color: var(--accent); }
-    .hero p { max-width: 520px; margin: 20px auto 28px; color: var(--muted); font-size: 15px; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .header-link {
+      color: #d9e5ff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .header-link:hover {
+      color: var(--cyan);
+    }
 
     .btn {
       display: inline-flex;
       min-height: 44px;
       align-items: center;
       justify-content: center;
-      padding: 11px 21px;
-      border: 0;
-      border-radius: 8px;
-      background: var(--accent);
+      gap: 8px;
+      padding: 10px 20px;
+      border: 1px solid rgba(22, 220, 255, .5);
+      border-radius: 9px;
+      background: linear-gradient(110deg, #087cae, #5440c8);
       color: white;
-      font-weight: 700;
+      font-weight: 800;
       text-align: center;
       text-decoration: none;
-      cursor: pointer;
-      transition: background .2s ease, transform .2s ease;
+      box-shadow: 0 0 17px rgba(22, 150, 255, .16);
+      transition: transform .2s ease, box-shadow .2s ease;
     }
-    .btn:hover { background: #566cf0; transform: translateY(-1px); }
-    .btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
-    .btn-dark { background: #263149; }
-    .btn-dark:hover { background: #34415e; }
-    .btn-danger { background: var(--danger); }
-    .btn-danger:hover { background: #962b41; }
 
-    section { padding: 64px 7%; scroll-margin-top: 82px; }
-    .section-title { margin-bottom: 10px; font-size: 27px; }
-    .section-subtitle { margin-bottom: 28px; color: #929bb5; font-size: 14px; }
-    .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 22px rgba(22, 220, 255, .3);
+    }
+
+    .btn-dark {
+      background: #18243d;
+      border-color: #45577d;
+    }
+
+    .btn-danger {
+      background: #a92548;
+      border-color: #ed5174;
+    }
+
+    .btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #installAppBtn {
+      min-height: 37px;
+      padding: 8px 12px;
+      font-size: 11px;
+      letter-spacing: .4px;
+      white-space: nowrap;
+    }
+
+    .page {
+      width: 100%;
+      min-height: calc(100vh - 145px);
+      padding: 55px 7%;
+      animation: pageAppear .35s ease both;
+    }
+
+    @keyframes pageAppear {
+      from {
+        opacity: 0;
+        transform: translateY(9px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* HOME PAGE */
+
+    .home-page {
+      min-height: calc(100vh - 70px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 75px;
+      padding-bottom: 75px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 50% 10%, rgba(45, 91, 210, .25), transparent 48%),
+        radial-gradient(ellipse at 50% 100%, rgba(135, 49, 213, .12), transparent 45%);
+    }
+
+    .hero-content {
+      width: 100%;
+      max-width: 760px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 26px;
+      padding: 8px 17px;
+      border: 1px solid rgba(22, 220, 255, .45);
+      border-radius: 30px;
+      background: rgba(22, 220, 255, .06);
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      animation: glow 2.8s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 5px rgba(22, 220, 255, .1); }
+      to { box-shadow: 0 0 18px rgba(22, 220, 255, .3); }
+    }
+
+    .hero-content h1 {
+      font-size: clamp(43px, 9vw, 82px);
+      line-height: 1.12;
+      letter-spacing: 2px;
+      font-weight: 900;
+    }
+
+    .hero-content h1 span {
+      color: var(--cyan);
+      text-shadow: 0 0 25px rgba(22, 220, 255, .4);
+    }
+
+    .hero-content p {
+      max-width: 540px;
+      margin: 22px auto 30px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .hero-content .btn {
+      min-width: 160px;
+    }
+
+    /* PAGE HEADINGS */
+
+    .page-heading {
+      margin-bottom: 9px;
+      font-size: clamp(27px, 5vw, 42px);
+      font-weight: 900;
+      letter-spacing: .5px;
+    }
+
+    .page-heading span {
+      color: var(--cyan);
+    }
+
+    .page-subtitle {
+      margin-bottom: 30px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .back-button {
+      margin-bottom: 27px;
+    }
+
+    /* MAIN MENU */
+
+    .menu-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse at 15% 10%, rgba(22, 220, 255, .11), transparent 40%),
+        radial-gradient(ellipse at 90% 80%, rgba(155, 92, 255, .13), transparent 40%);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 19px;
+      max-width: 850px;
+      margin: 22px auto 0;
+    }
+
+    .menu-card {
+      min-height: 150px;
+      padding: 23px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: linear-gradient(145deg, rgba(20, 33, 60, .96), rgba(11, 17, 34, .96));
+      color: white;
+      text-decoration: none;
+      text-align: left;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--cyan);
+      box-shadow: 0 0 23px rgba(22, 220, 255, .12);
+    }
+
+    .menu-icon {
+      color: var(--cyan);
+      font-size: 29px;
+    }
+
+    .menu-card strong {
+      font-size: 19px;
+    }
+
+    .menu-card small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* GAMES ZONE */
+
+    .games-page {
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(16, 111, 211, .18), transparent 45%),
+        radial-gradient(ellipse at 90% 80%, rgba(132, 44, 217, .12), transparent 45%);
+    }
+
+    .games-banner {
+      position: relative;
+      overflow: hidden;
+      margin: 4px 0 35px;
+      padding: 35px 28px;
+      border: 1px solid rgba(22, 220, 255, .38);
+      border-radius: 16px;
+      background:
+        linear-gradient(110deg, rgba(9, 37, 75, .96), rgba(45, 24, 93, .94));
+      box-shadow: 0 0 28px rgba(22, 130, 255, .1);
+    }
+
+    .games-banner h2 {
+      font-size: clamp(25px, 5vw, 39px);
+      font-weight: 900;
+    }
+
+    .games-banner h2 span {
+      color: var(--cyan);
+    }
+
+    .games-banner p {
+      margin-top: 8px;
+      color: #becbe2;
+      font-size: 14px;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+      gap: 20px;
+    }
+
     .game-card {
       min-width: 0;
       overflow: hidden;
       border: 1px solid var(--border);
-      border-radius: 13px;
-      background: var(--panel);
-      transition: transform .22s ease, border-color .22s ease;
+      border-radius: 14px;
+      background: linear-gradient(150deg, #15213b, #0c1222);
+      box-shadow: 0 7px 23px rgba(0, 0, 0, .2);
+      transition: transform .22s, border-color .22s, box-shadow .22s;
     }
-    .game-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--cyan);
+      box-shadow: 0 0 22px rgba(22, 220, 255, .13);
+    }
+
     .game-image {
-      height: 155px;
+      height: 160px;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      background: linear-gradient(135deg, #1c2850, #101827);
-      font-size: 54px;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(22, 220, 255, .22), transparent 55%),
+        linear-gradient(135deg, #172a52, #241447);
+      font-size: 55px;
     }
-    .game-image img { width: 100%; height: 100%; object-fit: cover; }
-    .game-info { padding: 18px; }
-    .game-info h3 { margin-bottom: 8px; overflow-wrap: anywhere; }
+
+    .game-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .game-info {
+      padding: 17px;
+    }
+
+    .game-info h3 {
+      margin-bottom: 7px;
+      overflow-wrap: anywhere;
+      font-size: 17px;
+    }
+
     .game-info p {
       min-height: 42px;
       margin-bottom: 14px;
-      color: #9da7bd;
+      color: var(--muted);
       font-size: 13px;
       overflow-wrap: anywhere;
       white-space: pre-wrap;
     }
-    .game-info .play-link { width: 100%; }
-    .game-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
-    .game-actions .btn { width: 100%; padding: 9px 8px; font-size: 12px; }
-    .empty-message { grid-column: 1 / -1; color: var(--muted); font-size: 14px; }
 
-    #snake {
-      background: var(--panel-2);
-      border-top: 1px solid #202638;
-      border-bottom: 1px solid #202638;
-      text-align: center;
-      scroll-margin-top: 100px;
+    .play-link {
+      width: 100%;
     }
-    .snake-scores { display: flex; justify-content: center; gap: 24px; margin: 20px 0 12px; }
-    .score { color: var(--accent-light); font-size: 18px; font-weight: 700; }
+
+    .game-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .game-actions .btn {
+      width: 100%;
+      padding: 8px;
+      font-size: 12px;
+    }
+
+    .empty-message {
+      grid-column: 1 / -1;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* SNAKE GAME */
+
+    .snake-page {
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(22, 220, 255, .1), transparent 50%);
+    }
+
+    .snake-box {
+      max-width: 550px;
+      margin: 0 auto;
+      padding: 25px 18px;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      background: rgba(13, 22, 42, .9);
+      box-shadow: 0 0 25px rgba(22, 120, 255, .1);
+    }
+
+    .snake-scores {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 15px 0;
+    }
+
+    .score {
+      color: var(--cyan);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
     #gameCanvas {
       display: block;
       width: min(100%, 400px);
       height: auto;
       aspect-ratio: 1 / 1;
-      margin: 18px auto;
-      border: 2px solid #34436b;
-      border-radius: 8px;
+      margin: 15px auto;
+      border: 2px solid #246a9c;
+      border-radius: 9px;
       background: #050a13;
+      box-shadow: 0 0 17px rgba(22, 220, 255, .13);
       touch-action: none;
     }
-    #snakeMessage { min-height: 24px; margin: 12px 0; color: var(--accent-light); font-size: 14px; }
-    .snake-main-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 12px auto 0; }
-    .snake-main-actions .btn { min-width: 132px; }
-    .game-controls { display: flex; flex-direction: column; align-items: center; gap: 8px; margin: 22px auto 10px; }
-    .control-row { display: flex; gap: 8px; }
+
+    #snakeMessage {
+      min-height: 24px;
+      margin: 10px 0;
+      color: var(--cyan);
+      font-size: 13px;
+    }
+
+    .game-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      margin: 18px auto 10px;
+    }
+
+    .control-row {
+      display: flex;
+      gap: 8px;
+    }
+
     .control-btn {
-      width: 58px;
-      height: 48px;
-      border: 1px solid #34415e;
+      width: 53px;
+      height: 43px;
+      border: 1px solid #277ca9;
       border-radius: 8px;
-      background: #26365c;
+      background: #172b4b;
       color: white;
-      font-size: 21px;
-      cursor: pointer;
+      font-size: 19px;
       touch-action: manipulation;
     }
-    .control-btn:active { background: var(--accent); }
-    .control-help { color: #929bb5; font-size: 12px; }
 
-    #creator { text-align: center; }
-    .creator-card {
-      max-width: 520px;
-      margin: 28px auto 0;
-      padding: 34px 24px;
-      border: 1px solid #34415e;
-      border-radius: 16px;
-      background: var(--panel);
+    .control-btn:active {
+      background: #146a9c;
     }
+
+    .control-help {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .snake-main-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    /* CREATOR */
+
+    .creator-page {
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(155, 92, 255, .12), transparent 48%);
+    }
+
+    .creator-card {
+      max-width: 540px;
+      margin: 25px auto;
+      padding: 35px 25px;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      background: linear-gradient(145deg, #15213b, #0c1222);
+      box-shadow: 0 0 24px rgba(155, 92, 255, .09);
+    }
+
     .creator-avatar {
-      width: 94px;
-      height: 94px;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 19px;
-      border: 2px solid #6f82ed;
+      border: 2px solid var(--cyan);
       border-radius: 50%;
-      background: linear-gradient(135deg, #344b9e, #7185ff);
-      font-size: 32px;
+      background: linear-gradient(135deg, #125a87, #5630a0);
+      box-shadow: 0 0 20px rgba(22, 220, 255, .17);
+      font-size: 31px;
       font-weight: 900;
     }
-    .creator-card h3 { font-size: 22px; letter-spacing: .6px; overflow-wrap: anywhere; }
-    .creator-role { margin: 9px 0 13px; color: var(--accent-light); font-size: 13px; font-weight: 700; letter-spacing: 1px; }
-    .creator-bio { color: var(--muted); font-size: 14px; line-height: 1.8; }
 
-    #admin {
+    .creator-card h3 {
+      font-size: 22px;
+      overflow-wrap: anywhere;
+    }
+
+    .creator-role {
+      margin: 9px 0 14px;
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .creator-bio {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    /* ABOUT */
+
+    .about-card {
+      max-width: 750px;
+      margin: 20px auto;
+      padding: 27px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: var(--panel);
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    /* ADMIN */
+
+    #adminPanel {
       max-width: 700px;
-      margin: 0 auto 64px;
+      margin: 0 auto;
       padding: 26px;
       border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--panel-2);
-      scroll-margin-top: 90px;
+      border-radius: 15px;
+      background: rgba(12, 20, 39, .96);
     }
-    #adminDashboard { display: none; }
-    .admin-form { margin-top: 20px; }
-    .admin-form label { display: block; margin-top: 10px; color: #c7cbe0; font-size: 13px; }
-    .admin-form input, .admin-form textarea {
+
+    #adminDashboard {
+      display: none;
+    }
+
+    .admin-form {
+      margin-top: 18px;
+    }
+
+    .admin-form label {
+      display: block;
+      margin-top: 11px;
+      color: #d5e1f5;
+      font-size: 13px;
+    }
+
+    .admin-form input,
+    .admin-form textarea {
       display: block;
       width: 100%;
       margin: 7px 0 12px;
       padding: 13px;
-      border: 1px solid #34415e;
-      border-radius: 7px;
+      border: 1px solid #344b70;
+      border-radius: 8px;
       outline: none;
-      background: #080b14;
+      background: #080e1c;
       color: white;
     }
-    .admin-form input:focus, .admin-form textarea:focus { border-color: var(--accent); }
-    .admin-form textarea { min-height: 82px; resize: vertical; }
-    .admin-message { min-height: 20px; margin: 12px 0; color: var(--accent-light); font-size: 13px; overflow-wrap: anywhere; }
-    .admin-divider { margin: 22px 0; border: 0; border-top: 1px solid var(--border); }
-    .admin-stat { margin: 16px 0; padding: 16px; border: 1px solid #34415e; border-radius: 10px; background: #17213a; color: #c7cbe0; }
-    .admin-stat strong { display: block; margin-top: 5px; color: var(--accent-light); font-size: 27px; }
 
-    footer { padding: 34px 7%; border-top: 1px solid #202638; background: var(--panel-2); color: #929bb5; text-align: center; font-size: 13px; line-height: 2; }
-    .footer-brand { color: white; font-size: 22px; font-weight: 900; }
+    .admin-form input:focus,
+    .admin-form textarea:focus {
+      border-color: var(--cyan);
+    }
+
+    .admin-form textarea {
+      min-height: 85px;
+      resize: vertical;
+    }
+
+    .admin-message {
+      min-height: 20px;
+      margin: 12px 0;
+      color: var(--cyan);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .admin-divider {
+      margin: 23px 0;
+      border: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .admin-stat {
+      margin: 17px 0;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #152542;
+      color: #d5e1f5;
+    }
+
+    .admin-stat strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--cyan);
+      font-size: 28px;
+    }
+
+    footer {
+      padding: 30px 6%;
+      border-top: 1px solid var(--border);
+      background: #080d19;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    .footer-brand {
+      color: white;
+      font-size: 22px;
+      font-weight: 900;
+    }
 
     @media (max-width: 620px) {
-      header { padding: 13px 5%; flex-wrap: wrap; gap: 12px; }
-      nav { width: 100%; justify-content: space-between; gap: 8px; }
-      nav a { font-size: 12px; }
-      .hero { padding: 72px 5% 65px; }
-      section { padding: 50px 5%; }
-      #admin { margin-right: 5%; margin-left: 5%; padding: 19px; }
-      header { position: relative; }
-      #snake { padding: 12px 4% 14px; scroll-margin-top: 8px; }
-      #snake .section-title { margin-bottom: 3px; font-size: 22px; }
-      #snake .section-subtitle { max-width: 450px; margin: 0 auto 6px; font-size: 12px; line-height: 1.35; }
-      .snake-scores { gap: 22px; margin: 4px 0; }
-      .score { font-size: 15px; }
-      #gameCanvas { width: min(66vw, 240px); max-width: 100%; margin: 6px auto; border-width: 1px; }
-      #snakeMessage { min-height: 18px; margin: 4px 0; font-size: 12px; line-height: 1.3; }
-      .game-controls { gap: 4px; margin: 4px auto 0; }
-      .control-row { gap: 6px; }
-      .control-btn { width: 42px; height: 34px; border-radius: 7px; font-size: 17px; }
-      .control-help { margin-top: 5px; font-size: 10px; line-height: 1.2; }
-      .snake-main-actions { gap: 8px; margin: 8px auto 0; }
-      .snake-main-actions .btn { min-width: 118px; min-height: 36px; padding: 7px 14px; font-size: 13px; }
+      header {
+        padding: 11px 4%;
+        gap: 8px;
+      }
+
+      .logo {
+        font-size: 19px;
+      }
+
+      .header-actions {
+        gap: 9px;
+      }
+
+      #installAppBtn {
+        padding: 7px 9px;
+        font-size: 10px;
+      }
+
+      .header-link {
+        font-size: 11px;
+      }
+
+      .page {
+        padding: 39px 5%;
+      }
+
+      .home-page {
+        min-height: calc(100vh - 65px);
+        padding-top: 65px;
+        padding-bottom: 65px;
+      }
+
+      .hero-content p {
+        font-size: 14px;
+      }
+
+      .menu-grid {
+        gap: 12px;
+      }
+
+      .menu-card {
+        min-height: 130px;
+        padding: 15px;
+      }
+
+      .menu-card strong {
+        font-size: 15px;
+      }
+
+      .menu-card small {
+        font-size: 10px;
+      }
+
+      .menu-icon {
+        font-size: 25px;
+      }
+
+      .games-banner {
+        padding: 25px 18px;
+      }
+
+      .snake-box {
+        padding: 17px 10px;
+      }
+
+      .control-btn {
+        width: 44px;
+        height: 36px;
+      }
+
+      #adminPanel {
+        padding: 19px;
+      }
     }
-    @media (max-width: 620px) and (max-height: 620px) {
-      #snake { padding-top: 8px; padding-bottom: 8px; }
-      #gameCanvas { width: min(54vw, 190px); margin: 4px auto; }
-      .control-btn { width: 36px; height: 30px; }
-      .snake-main-actions { margin-top: 5px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>
+
 <body>
+
+  <!-- HEADER -->
   <header>
-    <div class="logo">SADIK <span>PLAY</span></div>
+    <a href="./" class="logo" data-page-link="home">SADIK <span>PLAY</span></a>
+
+    <div class="header-actions">
+      <a href="?page=menu" class="header-link" data-page-link="menu">MENU</a>
+      <button type="button" class="btn" id="installAppBtn">
+        DOWNLOAD APP
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HOME PAGE -->
+    <section class="page home-page" id="page-home">
+      <div class="hero-content">
+        <div class="tag">WELCOME TO SADIK PLAY</div>
+
+        <h1>
+          PLAY.
+          <span>ENJOY.</span>
+          <br>
+          REPEAT.
+        </h1>
+
+        <p>
+          Discover exciting games and enjoy your gaming experience
+          with SADIK PLAY.
+        </p>
+
+        <a href="?page=menu" class="btn" data-page-link="menu">
+          GET STARTED
+        </a>
+      </div>
+    </section>
+
+    <!-- MAIN MENU -->
+    <section class="page menu-page" id="page-menu" hidden>
+      <div class="tag">SADIK PLAY</div>
+      <h1 class="page-heading">MAIN <span>MENU</span></h1>
+      <p class="page-subtitle">Choose where you want to go.</p>
+
+      <div class="menu-grid">
+        <a href="?page=games" class="menu-card" data-page-link="games">
+          <span class="menu-icon">🎮</span>
+          <strong>Games Zone</strong>
+          <small>Explore and play games</small>
+        </a>
+
+        <a href="?page=creator" class="menu-card" data-page-link="creator">
+          <span class="menu-icon">👤</span>
+          <strong>Creator Profile</strong>
+          <small>Meet the creator of SADIK PLAY</small>
+        </a>
+
+        <a href="?page=about" class="menu-card" data-page-link="about">
+          <span class="menu-icon">ℹ️</span>
+          <strong>About Us</strong>
+          <small>Know more about our platform</small>
+        </a>
+
+        <a href="?page=admin" class="menu-card" data-page-link="admin">
+          <span class="menu-icon">🛡️</span>
+          <strong>Admin Panel</strong>
+          <small>Owner control center</small>
+        </a>
+      </div>
+    </section>
+
+    <!-- GAMES ZONE -->
+    <section class="page games-page" id="page-games" hidden>
+      <a href="?page=menu" class="btn btn-dark back-button" data-page-link="menu">
+        ← MAIN MENU
+      </a>
+
+      <div class="games-banner">
+        <div class="tag">SADIK PLAY / GAMES</div>
+        <h2>GAMES <span>ZONE</span></h2>
+        <p>Explore the games and choose your next challenge.</p>
+      </div>
+
+      <h2 class="page-heading">FEATURED <span>GAMES</span></h2>
+      <p class="page-subtitle">Select a game to start playing.</p>
+
+      <div class="games-grid">
+
+        <article class="game-card">
+          <div class="game-image">🐍</div>
+          <div class="game-info">
+            <h3>SADIK SNAKE</h3>
+            <p>Play the classic snake game and beat your high score.</p>
+
+            <a href="?page=snake" class="btn play-link" data-page-link="snake">
+              PLAY NOW
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <h2 class="page-heading" style="margin-top:45px">
+        MORE <span>GAMES</span>
+      </h2>
+
+      <p class="page-subtitle">
+        More games added by SADIK PLAY will appear here.
+      </p>
+
+      <div class="games-grid" id="gamesContainer" aria-live="polite">
+        <p class="empty-message">Connecting to the games database...</p>
+      </div>
+    </section>
+
+    <!-- SNAKE GAME PAGE -->
+    <section class="page snake-page" id="page-snake" hidden>
+      <a href="?page=games" class="btn btn-dark back-button" data-page-link="games">
+        ← GAMES ZONE
+      </a>
+
+      <h1 class="page-heading">SADIK <span>SNAKE</span></h1>
+      <p class="page-subtitle">
+        Collect the food, grow your snake and avoid the walls and your own tail.
+      </p>
+
+      <div classass="logo">SADIK <span>PLAY</span></div>
     <nav aria-label="Main navigation">
       <a href="#home">Home</a>
       <a href="#games">Games</a>
